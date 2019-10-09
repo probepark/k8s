@@ -31,8 +31,7 @@ spec:
     spec:
       volumes:
         - name: assets
-          emptyDir:
-            {}
+          emptyDir: {}
       containers:
         - name: nginx
           image: gihyodocker/nginx-nuxt:latest

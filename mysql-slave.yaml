@@ -12,7 +12,6 @@ spec:
   selector:
     app: mysql-slave
 
-
 ---
 apiVersion: apps/v1
 kind: StatefulSet
@@ -21,13 +20,13 @@ metadata:
   labels:
     app: mysql-slave
 spec:
+  serviceName: "mysql-slave"
   selector:
     matchLabels:
       app: mysql-slave
   replicas: 2
   updateStrategy:
     type: OnDelete
-  serviceName: "mysql-slave"
   template:
     metadata:
       labels:
@@ -43,23 +42,23 @@ spec:
           ports:
             - containerPort: 3306
           env:
-            - name: MYSQLMASTER_HOST
+            - name: MYSQL_MASTER_HOST
               value: "mysql-master"
             - name: MYSQL_ROOT_PASSWORD
-              value: "probe"
+              value: "gihyo"
             - name: MYSQL_DATABASE
               value: "tododb"
             - name: MYSQL_USER
-              value: "probe"
+              value: "gihyo"
             - name: MYSQL_PASSWORD
-              value: "probe"
+              value: "gihyo"
             - name: MYSQL_REPL_USER
               value: "repl"
             - name: MYSQL_REPL_PASSWORD
-              value: "repl"
+              value: "gihyo"
           volumeMounts:
-            - mountPath: /var/lib/mysql
-              name: mysql-data
+            - name: mysql-data
+              mountPath: /var/lib/mysql
   volumeClaimTemplates:
     - metadata:
         name: mysql-data
